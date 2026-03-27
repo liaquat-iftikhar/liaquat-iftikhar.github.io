@@ -1,0 +1,600 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Iftikhar Liaquat — Senior Data Engineer</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:        #f4f6f9;
+    --bg2:       #edf0f4;
+    --surface:   #ffffff;
+    --navy:      #0d1f3c;
+    --navy2:     #162d52;
+    --steel:     #2e4a72;
+    --accent:    #1a56db;
+    --accent2:   #0e3fa5;
+    --gold:      #b08d4e;
+    --text:      #1a2233;
+    --muted:     #6b7a99;
+    --border:    #dce3ef;
+    --serif:     'Playfair Display', Georgia, serif;
+    --mono:      'IBM Plex Mono', monospace;
+    --sans:      'IBM Plex Sans', sans-serif;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--sans);
+    font-size: 16px;
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 200;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.1rem 3.5rem;
+    background: rgba(244,246,249,0.92);
+    backdrop-filter: blur(14px);
+    border-bottom: 1px solid var(--border);
+  }
+  .nav-logo {
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--navy);
+    text-decoration: none;
+    font-weight: 500;
+  }
+  .nav-logo span { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 2.5rem; }
+  nav a {
+    font-family: var(--mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  nav a:hover { color: var(--accent); }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    background: var(--navy);
+    display: grid;
+    grid-template-columns: 1fr 400px;
+    align-items: center;
+    padding: 9rem 3.5rem 5rem;
+    position: relative;
+    overflow: hidden;
+    gap: 4rem;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px,
+      transparent 1px, transparent 28px
+    );
+    pointer-events: none;
+  }
+  .hero::after {
+    content: '';
+    position: absolute;
+    top: -15%; right: -5%;
+    width: 55vw; height: 55vw;
+    background: radial-gradient(circle, rgba(26,86,219,0.13) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .hero-left { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.75rem;
+    font-family: var(--mono); font-size: 0.7rem;
+    letter-spacing: 0.22em; text-transform: uppercase;
+    color: #7aabf5; margin-bottom: 1.75rem;
+    opacity: 0; animation: fadeUp 0.7s 0.2s forwards;
+  }
+  .hero-eyebrow::before { content: ''; display: block; width: 2rem; height: 1px; background: #7aabf5; }
+
+  .hero-name {
+    font-family: var(--serif); font-size: clamp(3rem, 5.5vw, 5.2rem);
+    font-weight: 400; line-height: 1.08; color: #f0f4fa;
+    margin-bottom: 1.25rem;
+    opacity: 0; animation: fadeUp 0.7s 0.4s forwards;
+  }
+  .hero-name em { font-style: italic; color: #7aabf5; }
+
+  .hero-subtitle {
+    font-family: var(--mono); font-size: 0.78rem;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(255,255,255,0.35); margin-bottom: 2rem;
+    opacity: 0; animation: fadeUp 0.7s 0.55s forwards;
+  }
+
+  .hero-desc {
+    font-size: 1.02rem; color: rgba(255,255,255,0.58);
+    font-weight: 300; max-width: 50ch; line-height: 1.85;
+    margin-bottom: 2.75rem;
+    opacity: 0; animation: fadeUp 0.7s 0.7s forwards;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem;
+    opacity: 0; animation: fadeUp 0.7s 0.85s forwards;
+  }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.85rem 1.9rem; background: var(--accent); color: #fff;
+    font-family: var(--mono); font-size: 0.72rem; letter-spacing: 0.12em;
+    text-transform: uppercase; text-decoration: none; font-weight: 500;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .btn-primary:hover { background: var(--accent2); transform: translateY(-2px); }
+
+  .btn-ghost {
+    display: inline-flex; align-items: center; gap: 0.4rem;
+    padding: 0.85rem 1.9rem; border: 1px solid rgba(255,255,255,0.2);
+    color: rgba(255,255,255,0.65); font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.12em; text-transform: uppercase; text-decoration: none;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s;
+  }
+  .btn-ghost:hover { border-color: #7aabf5; color: #7aabf5; transform: translateY(-2px); }
+
+  /* PROFILE PHOTO */
+  .hero-right {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column;
+    align-items: center; gap: 1.5rem;
+    opacity: 0; animation: fadeIn 1s 1s forwards;
+  }
+
+  .profile-photo-wrap {
+    position: relative; width: 270px; height: 330px;
+  }
+  .profile-photo-wrap::before {
+    content: '';
+    position: absolute; top: 14px; left: 14px;
+    width: 100%; height: 100%;
+    pointer-events: none; z-index: 0;
+  }
+  .profile-photo {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    object-fit: cover; display: block;
+  }
+  .profile-placeholder {
+    position: relative; z-index: 1;
+    width: 100%; height: 100%;
+    background: rgba(255,255,255,0.03);
+    border: 1.5px dashed rgba(255,255,255,0.14);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 0.75rem;
+    cursor: pointer; transition: background 0.2s;
+  }
+  .profile-placeholder:hover { background: rgba(255,255,255,0.06); }
+  .placeholder-icon {
+    width: 52px; height: 52px; border-radius: 50%;
+    border: 1.5px dashed rgba(255,255,255,0.22);
+    display: flex; align-items: center; justify-content: center;
+  }
+  .placeholder-icon svg { opacity: 0.3; }
+  .placeholder-text {
+    font-family: var(--mono); font-size: 0.63rem;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: rgba(255,255,255,0.25); text-align: center; line-height: 1.6;
+  }
+  #photo-input { display: none; }
+
+  .hero-stats {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1px; background: rgba(255,255,255,0.07); width: 270px;
+  }
+  .hero-stat {
+    background: rgba(255,255,255,0.03);
+    padding: 1rem 1.25rem; text-align: center;
+  }
+  .hero-stat-val {
+    display: block; font-family: var(--serif);
+    font-size: 1.7rem; color: #7aabf5; line-height: 1; margin-bottom: 0.2rem;
+  }
+  .hero-stat-lbl {
+    font-family: var(--mono); font-size: 0.58rem;
+    letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.28);
+  }
+
+  .avail-badge {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--mono); font-size: 0.63rem;
+    letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.35);
+  }
+  .avail-dot {
+    width: 7px; height: 7px; border-radius: 50%; background: #4ade80;
+    animation: blink 2s infinite;
+  }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* SECTION WRAPPER */
+  .section-wrap { max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem; }
+
+  .section-header {
+    display: flex; align-items: baseline; gap: 1.25rem; margin-bottom: 3.5rem;
+  }
+  .section-num { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.15em; color: var(--accent); }
+  .section-title { font-family: var(--serif); font-size: clamp(2rem, 3vw, 2.8rem); font-weight: 400; color: var(--navy); }
+  .section-title em { font-style: italic; color: var(--accent); }
+  .section-line { flex: 1; height: 1px; background: var(--border); margin-left: 0.5rem; }
+
+  /* ABOUT */
+  #about { background: var(--surface); }
+  .about-inner {
+    max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .about-text { font-size: 1rem; color: var(--muted); font-weight: 300; margin-bottom: 1.25rem; line-height: 1.85; }
+  .about-text strong { color: var(--text); font-weight: 500; }
+  .about-links { margin-top: 2rem; display: flex; flex-direction: column; gap: 0.5rem; }
+  .about-link {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    text-decoration: none; font-family: var(--mono); font-size: 0.72rem;
+    letter-spacing: 0.06em; color: var(--muted); transition: color 0.2s; padding: 0.35rem 0;
+  }
+  .about-link:hover { color: var(--accent); }
+  .about-link-chip {
+    width: 26px; height: 26px; border: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.6rem; font-weight: 500; color: var(--steel);
+    transition: border-color 0.2s, color 0.2s;
+  }
+  .about-link:hover .about-link-chip { border-color: var(--accent); color: var(--accent); }
+
+  .cred-card {
+    border: 1px solid var(--border); padding: 1.4rem 1.6rem;
+    margin-bottom: 0.75rem; display: flex; align-items: center; gap: 1.1rem;
+    background: var(--bg); transition: border-color 0.2s, box-shadow 0.2s;
+  }
+  .cred-card:hover { border-color: rgba(26,86,219,0.35); box-shadow: 0 2px 14px rgba(26,86,219,0.06); }
+  .cred-icon {
+    width: 38px; height: 38px; background: rgba(26,86,219,0.08);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 1rem; flex-shrink: 0; color: var(--accent);
+  }
+  .cred-title { font-size: 0.92rem; font-weight: 500; color: var(--text); margin-bottom: 0.15rem; }
+  .cred-sub { font-family: var(--mono); font-size: 0.68rem; color: var(--muted); letter-spacing: 0.04em; }
+
+  .edu-block {
+    margin-top: 1.5rem; padding: 1.4rem 1.6rem;
+    border-left: 3px solid var(--accent); background: var(--bg);
+  }
+  .edu-degree { font-size: 0.95rem; font-weight: 500; color: var(--text); margin-bottom: 0.2rem; }
+  .edu-school { font-family: var(--mono); font-size: 0.68rem; color: var(--accent); letter-spacing: 0.08em; margin-bottom: 0.4rem; }
+  .edu-note { font-size: 0.85rem; color: var(--muted); font-weight: 300; }
+
+  /* SERVICES */
+  #services { background: var(--bg2); }
+  .services-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1px; background: var(--border); }
+  .service-card {
+    background: var(--surface); padding: 2.5rem;
+    position: relative; overflow: hidden; transition: background 0.2s;
+  }
+  .service-card::after {
+    content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), #7aabf5);
+    transform: scaleX(0); transform-origin: left; transition: transform 0.3s;
+  }
+  .service-card:hover::after { transform: scaleX(1); }
+  .service-card:hover { background: #fafbff; }
+  .svc-num { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.18em; color: var(--accent); display: block; margin-bottom: 1.1rem; }
+  .svc-title { font-size: 0.95rem; font-weight: 500; color: var(--navy); margin-bottom: 0.75rem; line-height: 1.35; }
+  .svc-desc { font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.75; }
+
+  .tech-strip { margin-top: 3rem; padding: 2.5rem; background: var(--navy); }
+  .tech-strip-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(255,255,255,0.28); margin-bottom: 1.25rem; }
+  .tags { display: flex; flex-wrap: wrap; gap: 0.45rem; }
+  .tag { font-family: var(--mono); font-size: 0.68rem; padding: 0.3rem 0.7rem; border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.42); letter-spacing: 0.04em; cursor: default; transition: all 0.18s; }
+  .tag:hover { border-color: #7aabf5; color: #7aabf5; }
+  .tag.hi { border-color: rgba(26,86,219,0.5); color: #7aabf5; background: rgba(26,86,219,0.09); }
+
+  /* CASE STUDIES */
+  #work { background: var(--surface); }
+  .case-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
+  .case-item { display: grid; grid-template-columns: 220px 1fr 180px; background: var(--bg); transition: background 0.2s; }
+  .case-item:hover { background: #f8faff; }
+
+  .case-left {
+    padding: 2.75rem; border-right: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: space-between; background: var(--surface);
+  }
+  .case-idx { font-family: var(--serif); font-size: 3.5rem; color: var(--border); line-height: 1; font-weight: 600; }
+  .case-company { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); display: block; margin-bottom: 0.2rem; }
+  .case-role { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
+
+  .case-mid { padding: 2.75rem; }
+  .case-title { font-family: var(--serif); font-size: 1.4rem; color: var(--navy); margin-bottom: 0.75rem; line-height: 1.25; }
+  .case-body { font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
+
+  .case-results {
+    padding: 2.75rem; border-left: 1px solid var(--border);
+    display: flex; flex-direction: column; justify-content: center; gap: 1.25rem;
+    background: var(--surface);
+  }
+  .result-stat { text-align: center; }
+  .result-val { display: block; font-family: var(--serif); font-size: 2rem; color: var(--accent); line-height: 1; margin-bottom: 0.2rem; }
+  .result-lbl { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+
+  /* CONTACT */
+  #contact { background: var(--navy); }
+  .contact-inner {
+    max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start;
+  }
+  .contact-heading { font-family: var(--serif); font-size: clamp(2rem,3vw,3rem); font-weight: 400; color: #f0f4fa; line-height: 1.15; margin-bottom: 1.25rem; }
+  .contact-heading em { font-style: italic; color: #7aabf5; }
+  .contact-sub { font-size: 0.95rem; color: rgba(255,255,255,0.42); font-weight: 300; line-height: 1.85; }
+
+  .contact-list { display: flex; flex-direction: column; gap: 0.5rem; }
+  .contact-row {
+    display: flex; align-items: center; gap: 1rem;
+    padding: 1.25rem 1.5rem; border: 1px solid rgba(255,255,255,0.07);
+    text-decoration: none; transition: border-color 0.2s, background 0.2s;
+  }
+  .contact-row:hover { border-color: rgba(122,171,245,0.35); background: rgba(255,255,255,0.03); }
+  .contact-row-icon { width: 36px; height: 36px; background: rgba(26,86,219,0.15); display: flex; align-items: center; justify-content: center; flex-shrink: 0; color: #7aabf5; }
+  .contact-row-label { font-family: var(--mono); font-size: 0.63rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.26); display: block; margin-bottom: 0.2rem; }
+  .contact-row-val { font-size: 0.88rem; color: rgba(255,255,255,0.65); }
+
+  /* FOOTER */
+  footer { background: #090f1e; border-top: 1px solid rgba(255,255,255,0.05); padding: 1.75rem 3.5rem; display: flex; justify-content: space-between; align-items: center; }
+  .footer-copy { font-family: var(--mono); font-size: 0.67rem; color: rgba(255,255,255,0.18); letter-spacing: 0.06em; }
+  .footer-top { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.22); text-decoration: none; transition: color 0.2s; }
+  .footer-top:hover { color: #7aabf5; }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp { from{opacity:0;transform:translateY(20px)} to{opacity:1;transform:translateY(0)} }
+  @keyframes fadeIn { from{opacity:0} to{opacity:1} }
+  .reveal { opacity:0; transform:translateY(18px); transition: opacity 0.65s, transform 0.65s; }
+  .reveal.in { opacity:1; transform:none; }
+
+  /* RESPONSIVE */
+  @media (max-width: 960px) {
+    nav { padding: 1rem 1.5rem; }
+    nav ul { gap: 1.5rem; }
+    .hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 4rem; gap: 3rem; }
+    .hero-right { flex-direction: row; flex-wrap: wrap; justify-content: flex-start; }
+    .profile-photo-wrap { width: 180px; height: 220px; }
+    .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
+    .section-wrap { padding: 4rem 1.5rem; }
+    .services-grid { grid-template-columns: 1fr; }
+    .case-item { grid-template-columns: 1fr; }
+    .case-left { flex-direction: row; align-items: center; gap: 1.5rem; border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; }
+    .case-idx { font-size: 2.5rem; }
+    .case-results { border-left: none; border-top: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; padding: 1.5rem 2rem; }
+    footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">IL </a>
+  <ul>
+    <li><a href="#about">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="#work">Work</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Senior Data Engineer · Berlin</div>
+    <h1 class="hero-name">Iftikhar<br><em>Liaquat</em></h1>
+    <p class="hero-subtitle">Cloud · Pipelines · Architecture</p>
+    <p class="hero-desc">7+ years building high-performance, cloud-native data infrastructure. From terabyte-scale marketing pipelines at HelloFresh to real-time stream processing — I engineer systems that drive measurable business outcomes.</p>
+    <div class="hero-ctas">
+      <a href="#work" class="btn-primary">View My Work ↓</a>
+      <a href="#contact" class="btn-ghost">Get In Touch →</a>
+    </div>
+  </div>
+
+  <div class="hero-right">
+    <div class="profile-photo-wrap" id="">
+      <img src="profile_image.png" alt="Iftikhar Liaquat" class="profile-photo">
+    </div>
+    
+
+    <div class="hero-stats">
+      <div class="hero-stat"><span class="hero-stat-val">7+</span><span class="hero-stat-lbl">Yrs Experience</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">53%</span><span class="hero-stat-lbl">AWS Savings</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">€8M</span><span class="hero-stat-lbl">ACVA Impact</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">20×</span><span class="hero-stat-lbl">Spark Reduction</span></div>
+    </div>
+
+    <div class="avail-badge"><div class="avail-dot"></div>Available for freelance</div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="about-inner">
+    <div class="reveal">
+      <div class="section-header" style="margin-bottom:2rem">
+        <span class="section-num">01 /</span>
+        <h2 class="section-title">About <em>Me</em></h2>
+      </div>
+      <p class="about-text">I'm a Senior Data Engineer based in Berlin with over <strong>seven years of experience</strong> designing and delivering scalable data systems for fast-moving, data-intensive organisations.</p>
+      <p class="about-text">My work sits at the intersection of <strong>cloud infrastructure, data engineering, and business impact</strong>. Whether driving a 53% reduction in AWS costs at HelloFresh, processing terabyte-scale datasets at Omio, or engineering financial pipelines for global investment operations — I bring the same focus: clean architecture, measurable results, and systems built to last.</p>
+      <p class="about-text">I thrive in cross-functional environments, translating complex technical requirements into solutions that stakeholders can actually use and trust.</p>
+      <div class="about-links">
+        <a href="https://www.linkedin.com/in/iftikharliaquat/" class="about-link" target="_blank"><div class="about-link-chip">in</div>linkedin.com/in/iftikharliaquat</a>
+        <a href="https://github.com/liaquat-iftikhar" class="about-link" target="_blank"><div class="about-link-chip">gh</div>github.com/iftikhar1995</a>
+        <a href="https://medium.com/@iftikharliaquat1995" class="about-link" target="_blank"><div class="about-link-chip">md</div>medium.com/@iftikharliaquat1995</a>
+      </div>
+    </div>
+    <div class="reveal">
+      <div class="cred-card"><div class="cred-icon">☁</div><div><div class="cred-title">AWS Certified Developer – Associate</div><div class="cred-sub">Amazon Web Services</div></div></div>
+      <div class="cred-card"><div class="cred-icon">✦</div><div><div class="cred-title">AWS Certified Cloud Practitioner</div><div class="cred-sub">Amazon Web Services</div></div></div>
+      <div class="cred-card"><div class="cred-icon">🏆</div><div><div class="cred-title">1st Place — National Software Competition</div><div class="cred-sub">FAST National University, 2018</div></div></div>
+      <div class="edu-block">
+        <div class="edu-degree">BSc Software Engineering</div>
+        <div class="edu-school">University of the Punjab — PUCIT · 2014–2018</div>
+        <div class="edu-note">Principal's List — recognised for GPA above 3.5</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section id="services">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">02 /</span>
+      <h2 class="section-title">Services &amp; <em>Skills</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="services-grid">
+      <div class="service-card reveal"><span class="svc-num">01</span><div class="svc-title">Data Pipeline Engineering</div><p class="svc-desc">End-to-end design and delivery of ETL/ELT pipelines using Apache Airflow, Spark, Flink, and Kafka — built for reliability and scalability at any data volume.</p></div>
+      <div class="service-card reveal"><span class="svc-num">02</span><div class="svc-title">Cloud Data Architecture</div><p class="svc-desc">Infrastructure design on AWS (Redshift, Glue, Lambda, ECS/EKS, Step Functions) and GCP (BigQuery, Dataproc). Certified AWS Developer – Associate.</p></div>
+      <div class="service-card reveal"><span class="svc-num">03</span><div class="svc-title">Data Warehousing &amp; Modelling</div><p class="svc-desc">Schema design, SCD processing, CDC logic, and data modelling across Redshift, BigQuery, ClickHouse, and PostgreSQL — focused on query performance and cost efficiency.</p></div>
+      <div class="service-card reveal"><span class="svc-num">04</span><div class="svc-title">Stream &amp; Real-Time Processing</div><p class="svc-desc">Real-time data systems using Apache Kafka and Flink, including anomaly detection and live cost attribution for cloud-native platforms.</p></div>
+      <div class="service-card reveal"><span class="svc-num">05</span><div class="svc-title">Data Quality &amp; Governance</div><p class="svc-desc">Data contracts, quality checks via Soda, data dictionaries, and catalogue tooling with Atlan — ensuring trustworthy, well-documented data assets.</p></div>
+      <div class="service-card reveal"><span class="svc-num">06</span><div class="svc-title">Technical Leadership</div><p class="svc-desc">Requirement gathering, RFC authoring, and cross-functional leadership — translating business needs into technical strategy and driving initiatives from concept to delivery.</p></div>
+    </div>
+    <div class="tech-strip reveal">
+      <p class="tech-strip-label">Core Technologies</p>
+      <div class="tags">
+        <span class="tag hi">Python</span><span class="tag hi">Scala</span><span class="tag hi">Apache Spark</span><span class="tag hi">Apache Airflow</span><span class="tag hi">Apache Kafka</span><span class="tag hi">BigQuery</span><span class="tag hi">AWS</span><span class="tag hi">Kubernetes</span>
+        <span class="tag">Redshift</span><span class="tag">ClickHouse</span><span class="tag">Apache Flink</span><span class="tag">Apache Hadoop</span><span class="tag">Dataproc</span><span class="tag">DynamoDB</span><span class="tag">MongoDB</span><span class="tag">PostgreSQL</span><span class="tag">Redis</span><span class="tag">Elasticsearch</span><span class="tag">DataDog</span><span class="tag">Cloudwatch</span><span class="tag">Step Functions</span><span class="tag">AWS Glue</span><span class="tag">Kotlin</span><span class="tag">Soda</span><span class="tag">Atlan</span><span class="tag">Salesforce</span><span class="tag">Confluence</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CASE STUDIES -->
+<section id="work">
+  <div class="section-wrap">
+    <div class="section-header reveal">
+      <span class="section-num">03 /</span>
+      <h2 class="section-title">Selected <em>Work</em></h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="case-list">
+
+      <div class="case-item reveal">
+        <div class="case-left"><div class="case-idx">01</div><div><span class="case-company">HelloFresh</span><span class="case-role">Lead Data Engineer</span></div></div>
+        <div class="case-mid">
+          <h3 class="case-title">Data Modernization Initiative</h3>
+          <p class="case-body">Led the end-to-end modernization of HelloFresh's marketing data infrastructure — decoupling 27% of P1 data flows, consolidating Airflow deployments into regional workflows, introducing data quality checks, and realigning scheduling to improve data freshness across global business units.</p>
+        </div>
+        <div class="case-results">
+          <div class="result-stat"><span class="result-val">−19%</span><span class="result-lbl">DAG Count</span></div>
+          <div class="result-stat"><span class="result-val">20×</span><span class="result-lbl">Spark Reduction</span></div>
+          <div class="result-stat"><span class="result-val">~53%</span><span class="result-lbl">AWS Savings</span></div>
+        </div>
+      </div>
+
+      <div class="case-item reveal">
+        <div class="case-left"><div class="case-idx">02</div><div><span class="case-company">HelloFresh</span><span class="case-role">Lead Data Engineer</span></div></div>
+        <div class="case-mid">
+          <h3 class="case-title">Menu Building Block — CRM Automation</h3>
+          <p class="case-body">Designed and delivered an automated CRM campaign planning system to replace a manual weekly process. Authored the product RFC, secured algorithm sign-off from data owners, delivered the first implementation phase, and built a central Confluence hub for all discovery and documentation.</p>
+        </div>
+        <div class="case-results">
+          <div class="result-stat"><span class="result-val">€8M</span><span class="result-lbl">Projected ACVA</span></div>
+          <div class="result-stat"><span class="result-val">#3</span><span class="result-lbl">Group Strategy</span></div>
+        </div>
+      </div>
+
+      <div class="case-item reveal">
+        <div class="case-left"><div class="case-idx">03</div><div><span class="case-company">Omio · Berlin</span><span class="case-role">Senior Data Engineer</span></div></div>
+        <div class="case-mid">
+          <h3 class="case-title">Marketing ROI Pipeline</h3>
+          <p class="case-body">Designed and built a consolidated system for collecting and analysing marketing spend data across all acquisition channels using Scala, Airflow, Dataproc, and BigQuery. Delivered comprehensive documentation and a data dictionary to ensure long-term maintainability and team adoption.</p>
+        </div>
+        <div class="case-results">
+          <div class="result-stat"><span class="result-val">TB+</span><span class="result-lbl">Data Processed</span></div>
+          <div class="result-stat"><span class="result-val">1×</span><span class="result-lbl">Unified Source</span></div>
+        </div>
+      </div>
+
+      <div class="case-item reveal">
+        <div class="case-left"><div class="case-idx">04</div><div><span class="case-company">Yotascale</span><span class="case-role">Senior Data Engineer</span></div></div>
+        <div class="case-mid">
+          <h3 class="case-title">Cloud Cost Optimization Pipelines</h3>
+          <p class="case-body">Built scalable data pipelines enabling granular cost attribution for Kubernetes workloads and implemented real-time anomaly detection to surface unexpected cost spikes — powering Yotascale's core cloud cost optimization product.</p>
+        </div>
+        <div class="case-results">
+          <div class="result-stat"><span class="result-val">RT</span><span class="result-lbl">Anomaly Detection</span></div>
+          <div class="result-stat"><span class="result-val">K8s</span><span class="result-lbl">Cost Attribution</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-inner">
+    <div class="reveal">
+      <h2 class="contact-heading">Let's build something <em>great.</em></h2>
+      <p class="contact-sub">Open to freelance data engineering engagements worldwide. Whether you need a pipeline architect, cloud data expert, or technical lead — let's talk.</p>
+    </div>
+    <div class="contact-list reveal">
+      <a href="mailto:iftikharliaquat1995@gmail.com" class="contact-row">
+        <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
+        <div><span class="contact-row-label">Email</span><span class="contact-row-val">iftikharliaquat1995@gmail.com</span></div>
+      </a>
+      <a href="tel:+4917677254339" class="contact-row">
+        <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
+        <div><span class="contact-row-label">Phone</span><span class="contact-row-val">+49 176 77254339</span></div>
+      </a>
+      <a href="https://www.linkedin.com/in/iftikharliaquat/" class="contact-row" target="_blank">
+        <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
+        <div><span class="contact-row-label">LinkedIn</span><span class="contact-row-val">linkedin.com/in/iftikharliaquat</span></div>
+      </a>
+      <a href="https://github.com/iftikhar1995" class="contact-row" target="_blank">
+        <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
+        <div><span class="contact-row-label">GitHub</span><span class="contact-row-val">github.com/iftikhar1995</span></div>
+      </a>
+      <a href="https://medium.com/@iftikharliaquat1995" class="contact-row" target="_blank">
+        <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg></div>
+        <div><span class="contact-row-label">Blog</span><span class="contact-row-val">medium.com/@iftikharliaquat1995</span></div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="footer-copy">© 2025 Iftikhar Liaquat · Senior Data Engineer · Berlin</span>
+  <a href="#" class="footer-top">Back to top ↑</a>
+</footer>
+
+<script>
+  // Scroll reveal
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); obs.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
