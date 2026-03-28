@@ -6,6 +6,7 @@
 <title>Iftikhar Liaquat — Senior Data Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;1,400&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 <style>
   :root {
     --bg:      #F8F9FA;
@@ -41,9 +42,14 @@
   .nav-logo:hover svg { opacity: 0.85; }
   .nav-avail { display: flex; align-items: center; gap: 0.45rem; font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; color: var(--teal); background: rgba(13,148,136,0.08); border: 1px solid rgba(13,148,136,0.2); padding: 0.3rem 0.75rem; }
   .nav-avail-dot { width: 6px; height: 6px; border-radius: 50%; background: #34D399; animation: blink 2s infinite; }
-  nav ul { list-style: none; display: flex; gap: 2.5rem; align-items: center; }
-  nav a { font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-  nav a:hover { color: var(--accent); }
+  nav ul { list-style: none; display: flex; gap: 0.5rem; align-items: center; }
+  nav ul li a {
+    font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--muted); text-decoration: none;
+    padding: 0.4rem 0.85rem;
+    transition: background 0.2s, color 0.2s;
+  }
+  nav ul li a:hover { background: var(--teal); color: #ffffff; }
 
   /* hamburger button — hidden on desktop */
   .nav-hamburger {
@@ -360,20 +366,137 @@
 
   /* ─── CASE STUDIES ─── */
   #work { background: var(--bg2); }
-  .case-list { display: flex; flex-direction: column; gap: 1px; background: var(--border); }
-  .case-item { display: grid; grid-template-columns: 220px 1fr 180px; background: var(--bg); transition: background 0.2s; }
-  .case-item:hover { background: #F0FDF4; }
-  .case-left { padding: 2.75rem; border-right: 1px solid var(--border); display: flex; flex-direction: column; justify-content: space-between; background: var(--surface); }
-  .case-idx { font-family: var(--serif); font-size: 3.5rem; color: var(--border); line-height: 1; font-weight: 600; }
-  .case-company { font-family: var(--mono); font-size: 0.67rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--teal); display: block; margin-bottom: 0.2rem; }
-  .case-role { font-family: var(--mono); font-size: 0.65rem; color: var(--muted); letter-spacing: 0.05em; }
-  .case-mid { padding: 2.75rem; }
-  .case-title { font-family: var(--serif); font-size: 1.4rem; color: var(--navy); margin-bottom: 0.75rem; line-height: 1.25; }
-  .case-body { font-size: 0.875rem; color: var(--muted); font-weight: 300; line-height: 1.8; }
-  .case-results { padding: 2.75rem; border-left: 1px solid var(--border); display: flex; flex-direction: column; justify-content: center; gap: 1.25rem; background: var(--surface); }
-  .result-stat { text-align: center; }
-  .result-val { display: block; font-family: var(--serif); font-size: 2rem; color: var(--teal); line-height: 1; margin-bottom: 0.2rem; }
-  .result-lbl { font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase; }
+  .case-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1px;
+    background: var(--border);
+  }
+  /* last card spans full width if odd number */
+  .case-grid .case-card:last-child:nth-child(3n+1) {
+    grid-column: 1 / -1;
+  }
+  .case-card {
+    background: var(--surface);
+    padding: 2.25rem;
+    cursor: pointer;
+    position: relative;
+    transition: background 0.2s;
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+  }
+  .case-card:hover { background: #F0FDF4; }
+  .case-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--accent), var(--teal));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.35s;
+  }
+  .case-card:hover::before,
+  .case-card.open::before { transform: scaleX(1); }
+  .case-card.open { background: #F8FFFE; }
+
+  .case-card-header {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 1rem;
+  }
+  .case-card-meta { display: flex; flex-direction: column; gap: 0.25rem; }
+  .case-badge {
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.12em;
+    text-transform: uppercase; color: var(--teal);
+    background: rgba(13,148,136,0.08); border: 1px solid rgba(13,148,136,0.2);
+    padding: 0.2rem 0.55rem; display: inline-block; width: fit-content;
+  }
+  .case-badge-role {
+    font-family: var(--mono); font-size: 0.6rem; letter-spacing: 0.06em;
+    color: var(--muted);
+  }
+  .case-card-num {
+    font-family: var(--serif); font-size: 2.5rem; color: var(--border);
+    line-height: 1; font-weight: 600; flex-shrink: 0;
+  }
+  .case-card-title {
+    font-family: var(--serif); font-size: 1.2rem; color: var(--navy);
+    line-height: 1.25; margin-bottom: 0.75rem;
+  }
+  .case-card-summary {
+    font-size: 0.875rem; color: var(--muted); font-weight: 300;
+    line-height: 1.75; margin-bottom: 1.25rem; flex: 1;
+  }
+  .case-card-metrics {
+    display: flex; gap: 0; background: var(--bg2);
+    border: 1px solid var(--border); margin-bottom: 1.25rem;
+  }
+  .case-metric {
+    flex: 1; padding: 0.75rem 0.5rem; text-align: center;
+    border-right: 1px solid var(--border);
+  }
+  .case-metric:last-child { border-right: none; }
+  .case-metric-val {
+    display: block; font-family: var(--serif); font-size: 1.4rem;
+    color: var(--teal); line-height: 1; margin-bottom: 0.2rem;
+  }
+  .case-metric-lbl {
+    font-family: var(--mono); font-size: 0.55rem; letter-spacing: 0.08em;
+    text-transform: uppercase; color: var(--muted);
+  }
+
+  .case-expand-hint {
+    display: flex; align-items: center; justify-content: space-between;
+    font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    padding-top: 0.75rem; border-top: 1px solid var(--border);
+  }
+  .case-expand-icon {
+    transition: transform 0.3s;
+    display: inline-block;
+  }
+  .case-card.open .case-expand-icon { transform: rotate(180deg); }
+  .case-card.open .case-expand-text { content: 'Close'; }
+
+  /* expandable detail panel */
+  .case-detail {
+    max-height: 0; overflow: hidden;
+    transition: max-height 0.45s ease, padding 0.3s ease;
+    padding-top: 0;
+  }
+  .case-card.open .case-detail {
+    max-height: 600px;
+    padding-top: 1.5rem;
+  }
+  .case-detail-block { margin-bottom: 1.25rem; }
+  .case-detail-block:last-child { margin-bottom: 0; }
+  .case-detail-label {
+    font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--muted);
+    margin-bottom: 0.5rem;
+  }
+  .case-detail-text {
+    font-size: 0.85rem; color: var(--muted); font-weight: 300; line-height: 1.75;
+  }
+  .case-detail-list {
+    list-style: none; display: flex; flex-direction: column; gap: 0.4rem;
+  }
+  .case-detail-list li {
+    font-size: 0.85rem; color: var(--muted); font-weight: 300;
+    padding-left: 1.1rem; position: relative; line-height: 1.6;
+  }
+  .case-detail-list li::before {
+    content: '→'; position: absolute; left: 0;
+    color: var(--accent); font-size: 0.75rem;
+  }
+  .case-dq-tag {
+    display: inline-flex; align-items: center; gap: 0.35rem;
+    font-family: var(--mono); font-size: 0.58rem; letter-spacing: 0.1em;
+    text-transform: uppercase; color: var(--accent);
+    background: rgba(37,99,235,0.07); border: 1px solid rgba(37,99,235,0.2);
+    padding: 0.18rem 0.5rem; margin-top: 0.35rem; width: fit-content;
+  }
+  .case-dq-tag::before { content: '◈'; font-size: 0.6rem; }
+  .case-detail-label.dq { color: var(--accent); }
+  .case-detail-list.dq li::before { content: '◈'; color: var(--accent); font-size: 0.65rem; }
 
   /* ─── CONTACT ─── */
   #contact { background: var(--navy); }
@@ -421,13 +544,16 @@
     .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
     .section-wrap, .why-inner, .pipeline-inner { padding: 4rem 1.5rem; }
     .services-grid, .why-grid, .why-vs { grid-template-columns: 1fr; }
-    .case-item { grid-template-columns: 1fr; }
-    .case-left { flex-direction: row; align-items: center; gap: 1.5rem; border-right: none; border-bottom: 1px solid var(--border); padding: 1.5rem 2rem; }
-    .case-idx { font-size: 2.5rem; }
-    .case-results { border-left: none; border-top: 1px solid var(--border); flex-direction: row; flex-wrap: wrap; padding: 1.5rem 2rem; }
+    .case-grid { grid-template-columns: 1fr; }
+    .case-grid .case-card:last-child:nth-child(3n+1) { grid-column: auto; }
     .pipeline-row { flex-wrap: wrap; gap: 1rem; }
     .p-arrow { display: none; }
     footer { flex-direction: column; gap: 0.75rem; text-align: center; }
+  }
+  @media (min-width: 961px) and (max-width: 1200px) {
+    .case-grid { grid-template-columns: repeat(2, 1fr); }
+    .case-grid .case-card:last-child:nth-child(2n+1) { grid-column: 1 / -1; }
+    .case-grid .case-card:last-child:nth-child(3n+1) { grid-column: auto; }
   }
 </style>
 </head>
@@ -455,7 +581,7 @@
     <li><a href="#about">About</a></li>
     <li><a href="#why">Why Me</a></li>
     <li><a href="#pipeline">Stack</a></li>
-    <li><a href="#work">Work</a></li>
+    <li><a href="#work">Case Studies</a></li>
     <li><a href="#contact">Contact</a></li>
     <li>
       <div class="nav-avail">
@@ -490,7 +616,7 @@
   <a href="#about"    onclick="closeMenu()">About</a>
   <a href="#why"      onclick="closeMenu()">Why Me</a>
   <a href="#pipeline" onclick="closeMenu()">Stack</a>
-  <a href="#work"     onclick="closeMenu()">Work</a>
+  <a href="#work"     onclick="closeMenu()">Case Studies</a>
   <a href="#contact"  onclick="closeMenu()">Contact</a>
   <div class="nav-mobile-avail">
     <div class="nav-mobile-avail-dot"></div>
@@ -516,9 +642,11 @@
   <div class="hero-right">
     <div class="profile-photo-wrap" id="photo-wrap">
       <img src="profile_image.png" alt="Iftikhar Liaquat" class="profile-photo" />
+    </div>
+    <input type="file" id="photo-input" accept="image/*">
 
     <div class="hero-stats">
-      <div class="hero-stat"><span class="hero-stat-val">7+</span><span class="hero-stat-lbl">Yrs in Prod</span></div>
+      <div class="hero-stat"><span class="hero-stat-val">7+</span><span class="hero-stat-lbl">Seniority</span></div>
       <div class="hero-stat"><span class="hero-stat-val">~53%</span><span class="hero-stat-lbl">Cost Reduction</span></div>
       <div class="hero-stat"><span class="hero-stat-val">€8M</span><span class="hero-stat-lbl">Revenue Impact</span></div>
       <div class="hero-stat"><span class="hero-stat-val">20×</span><span class="hero-stat-lbl">Spark Speedup</span></div>
@@ -558,9 +686,9 @@
       <p class="about-text">My work sits at the intersection of <strong>cloud infrastructure, data engineering, and business impact</strong>. Whether driving a 53% reduction in AWS costs at HelloFresh, processing terabyte-scale marketing datasets at Omio, or engineering financial data pipelines for global investment operations — I bring the same focus: clean architecture, measurable results, and systems built to last.</p>
       <p class="about-text">I thrive in cross-functional environments, translating complex technical requirements into solutions that stakeholders can actually use and trust.</p>
       <div class="about-links">
-        <a href="https://www.linkedin.com/in/iftikharliaquat/" class="about-link" target="_blank"><div class="about-link-chip">in</div>linkedin.com/in/iftikharliaquat</a>
-        <a href="https://github.com/iftikhar1995" class="about-link" target="_blank"><div class="about-link-chip">gh</div>github.com/iftikhar1995</a>
-        <a href="https://medium.com/@iftikharliaquat1995" class="about-link" target="_blank"><div class="about-link-chip">md</div>medium.com/@iftikharliaquat1995</a>
+        <a href="https://www.linkedin.com/in/iftikharliaquat/" class="about-link" target="_blank"><i class="fa-brands fa-linkedin"></i>linkedin.com/in/iftikharliaquat</a>
+        <a href="https://github.com/liaquat-iftikhar" class="about-link" target="_blank"><i class="fa-brands fa-github"></i>github.com/liaquat-iftikhar</a>
+        <a href="https://medium.com/@iftikharliaquat1995" class="about-link" target="_blank"><i class="fa-brands fa-medium"></i>medium.com/@iftikharliaquat1995</a>
       </div>
     </div>
     <div class="reveal">
@@ -746,56 +874,354 @@
   <div class="section-wrap">
     <div class="section-header reveal">
       <span class="section-num">05 /</span>
-      <h2 class="section-title">Selected <em>Work</em></h2>
+      <h2 class="section-title">Case <em>Studies</em></h2>
       <div class="section-line"></div>
     </div>
-    <div class="case-list">
-      <div class="case-item reveal">
-        <div class="case-left"><div class="case-idx">01</div><div><span class="case-company">HelloFresh</span><span class="case-role">Lead Data Engineer</span></div></div>
-        <div class="case-mid">
-          <h3 class="case-title">Data Modernization Initiative</h3>
-          <p class="case-body">Led the end-to-end modernization of HelloFresh's marketing data infrastructure — decoupling 27% of P1 data flows, consolidating Airflow deployments into regional workflows, introducing data quality checks, and realigning scheduling to improve data freshness across global business units.</p>
+
+    <div class="case-grid">
+
+      <!-- 01 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">HelloFresh</span>
+            <span class="case-badge-role">Lead Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
         </div>
-        <div class="case-results">
-          <div class="result-stat"><span class="result-val">−19%</span><span class="result-lbl">DAG Count</span></div>
-          <div class="result-stat"><span class="result-val">20×</span><span class="result-lbl">Spark Reduction</span></div>
-          <div class="result-stat"><span class="result-val">~53%</span><span class="result-lbl">AWS Savings</span></div>
+        <h3 class="case-card-title">Data Platform Modernization &amp; Cost Optimization</h3>
+        <p class="case-card-summary">Reduced AWS costs by ~53% by simplifying pipelines, cutting DAGs by 19%, and reducing Spark jobs by 20×.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">~53%</span><span class="case-metric-lbl">AWS Cost Saved</span></div>
+          <div class="case-metric"><span class="case-metric-val">20×</span><span class="case-metric-lbl">Spark Reduction</span></div>
+          <div class="case-metric"><span class="case-metric-val">−19%</span><span class="case-metric-lbl">DAG Count</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">The existing data platform had high complexity, redundant pipelines, and escalating AWS costs — impacting scalability and maintainability across global business units.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li>Decoupled 27% of critical (P1) data flows</li>
+              <li>Consolidated Airflow deployments into regional workflows</li>
+              <li>Optimised Spark jobs and scheduling strategies</li>
+              <li>Introduced data quality checks and migrated to modern sources</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Deployed Soda-based quality checks across all P1 data flows</li>
+              <li>Defined data contracts between producer and consumer teams</li>
+              <li>Migrated to validated modern sources — reducing stale data incidents</li>
+              <li>Automated freshness checks to surface scheduling delays before downstream impact</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>~53% reduction in AWS infrastructure costs</li>
+              <li>20× reduction in Spark job submissions</li>
+              <li>Improved pipeline reliability and data freshness globally</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="case-item reveal">
-        <div class="case-left"><div class="case-idx">02</div><div><span class="case-company">HelloFresh</span><span class="case-role">Lead Data Engineer</span></div></div>
-        <div class="case-mid">
-          <h3 class="case-title">Menu Building Block — CRM Automation</h3>
-          <p class="case-body">Designed and delivered an automated CRM campaign planning system. Authored the product RFC, secured algorithm sign-off from data owners, delivered the first implementation phase, and built a central Confluence hub for all discovery and documentation.</p>
+
+      <!-- 02 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">HelloFresh</span>
+            <span class="case-badge-role">Lead Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
+          <div class="case-card-num">02</div>
         </div>
-        <div class="case-results">
-          <div class="result-stat"><span class="result-val">€8M</span><span class="result-lbl">Projected ACVA</span></div>
-          <div class="result-stat"><span class="result-val">#3</span><span class="result-lbl">Group Strategy</span></div>
+        <h3 class="case-card-title">Automated CRM Campaign System</h3>
+        <p class="case-card-summary">Automated campaign planning using data pipelines, enabling scale and driving €8M projected business impact.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">€8M</span><span class="case-metric-lbl">Projected ACVA</span></div>
+          <div class="case-metric"><span class="case-metric-val">#3</span><span class="case-metric-lbl">Group Strategy</span></div>
+          <div class="case-metric"><span class="case-metric-val">100%</span><span class="case-metric-lbl">Automated</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">Manual CRM campaign planning was difficult to scale and required significant operational effort — limiting growth and personalisation capabilities.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li>Built automated system for CRM campaign generation</li>
+              <li>Collaborated cross-functionally to source and validate datasets</li>
+              <li>Authored product RFC and defined system architecture</li>
+              <li>Secured stakeholder alignment and delivered production-ready solution</li>
+              <li>Created centralised documentation and knowledge hub</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Validated all input datasets before feeding the campaign generation algorithm</li>
+              <li>Applied schema checks and null-value guards to prevent silent data errors</li>
+              <li>Built a data dictionary to document all sources, fields, and transformation logic</li>
+              <li>Cross-functional dataset reviews ensured correctness before stakeholder sign-off</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>€8M projected incremental business value (ACVA)</li>
+              <li>Enabled scalable and repeatable campaign workflows</li>
+              <li>Supported company-wide monetisation strategy — Group Strategy #3</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="case-item reveal">
-        <div class="case-left"><div class="case-idx">03</div><div><span class="case-company">Omio · Berlin</span><span class="case-role">Senior Data Engineer</span></div></div>
-        <div class="case-mid">
-          <h3 class="case-title">Marketing ROI Pipeline</h3>
-          <p class="case-body">Designed and built a consolidated system for collecting and analysing marketing spend data across all acquisition channels using Scala, Airflow, Dataproc, and BigQuery. Delivered comprehensive documentation and a data dictionary for long-term maintainability.</p>
+
+      <!-- 03 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">Omio</span>
+            <span class="case-badge-role">Senior Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
+          <div class="case-card-num">03</div>
         </div>
-        <div class="case-results">
-          <div class="result-stat"><span class="result-val">TB+</span><span class="result-lbl">Data Processed</span></div>
-          <div class="result-stat"><span class="result-val">1×</span><span class="result-lbl">Unified Source</span></div>
+        <h3 class="case-card-title">Unified Marketing ROI Analytics Platform</h3>
+        <p class="case-card-summary">Built a unified system to track and analyse marketing spend, enabling data-driven acquisition decisions across all channels.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">TB+</span><span class="case-metric-lbl">Data Processed</span></div>
+          <div class="case-metric"><span class="case-metric-val">1×</span><span class="case-metric-lbl">Unified Source</span></div>
+          <div class="case-metric"><span class="case-metric-val">↑</span><span class="case-metric-lbl">Budget Visibility</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">Marketing data was fragmented across platforms, making ROI calculation difficult and unreliable — hindering data-driven budget allocation decisions for the acquisition team.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li>Designed unified data pipelines to ingest multi-channel marketing data</li>
+              <li>Standardised and modelled data for consistent ROI calculation</li>
+              <li>Enabled cross-channel analytics for acquisition teams</li>
+              <li>Delivered full data dictionary and documentation</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Standardised data formats and field definitions across all marketing channels to eliminate inconsistencies</li>
+              <li>Implemented row-count and completeness checks at each ingestion stage</li>
+              <li>Produced a comprehensive data dictionary to ensure consistent interpretation by all teams</li>
+              <li>Validated spend figures against source-of-truth reports before surfacing to analytics consumers</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>Improved visibility into marketing performance across all channels</li>
+              <li>Enabled data-driven budget allocation decisions</li>
+              <li>Increased efficiency of acquisition strategies</li>
+            </ul>
+          </div>
         </div>
       </div>
-      <div class="case-item reveal">
-        <div class="case-left"><div class="case-idx">04</div><div><span class="case-company">Yotascale</span><span class="case-role">Senior Data Engineer</span></div></div>
-        <div class="case-mid">
-          <h3 class="case-title">Cloud Cost Optimization Pipelines</h3>
-          <p class="case-body">Built scalable data pipelines enabling granular cost attribution for Kubernetes workloads and implemented real-time anomaly detection to surface unexpected cost spikes — powering Yotascale's core cloud cost optimization product.</p>
+
+      <!-- 04 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">Yotascale</span>
+            <span class="case-badge-role">Senior Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
+          <div class="case-card-num">04</div>
         </div>
-        <div class="case-results">
-          <div class="result-stat"><span class="result-val">RT</span><span class="result-lbl">Anomaly Detection</span></div>
-          <div class="result-stat"><span class="result-val">K8s</span><span class="result-lbl">Cost Attribution</span></div>
+        <h3 class="case-card-title">Cloud Cost Optimization Data Platform</h3>
+        <p class="case-card-summary">Built pipelines for Kubernetes cost attribution and real-time anomaly detection — powering the core product.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">RT</span><span class="case-metric-lbl">Anomaly Detection</span></div>
+          <div class="case-metric"><span class="case-metric-val">K8s</span><span class="case-metric-lbl">Cost Attribution</span></div>
+          <div class="case-metric"><span class="case-metric-val">↓</span><span class="case-metric-lbl">Infra Spend</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">Lack of granular cost visibility across Kubernetes workloads made cloud spend optimisation difficult — leaving teams flying blind on infrastructure costs.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li>Built pipelines to process large-scale cloud usage data</li>
+              <li>Enabled cost attribution for Kubernetes workloads</li>
+              <li>Implemented real-time anomaly detection for cost spikes</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Applied checksum validation on ingested usage records to detect corrupted or partial data</li>
+              <li>Implemented SCD (Slowly Changing Dimension) logic to maintain historical accuracy of workload cost data</li>
+              <li>Built custom validation workflows to verify attribution consistency across cloud providers</li>
+              <li>Automated anomaly flagging served as both a product feature and a data quality guardrail</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>Improved cost transparency across all infrastructure</li>
+              <li>Enabled proactive cost monitoring and optimisation</li>
+              <li>Supported real-time decision-making at engineering scale</li>
+            </ul>
+          </div>
         </div>
       </div>
-    </div>
+
+      <!-- 05 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">Invesco</span>
+            <span class="case-badge-role">Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
+          <div class="case-card-num">05</div>
+        </div>
+        <h3 class="case-card-title">Financial Data Pipelines</h3>
+        <p class="case-card-summary">Built scalable ingestion and transformation pipelines for global investment data — enabling reliable reporting and analytics.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">🌍</span><span class="case-metric-lbl">Global Ops</span></div>
+          <div class="case-metric"><span class="case-metric-val">✓</span><span class="case-metric-lbl">Data Accuracy</span></div>
+          <div class="case-metric"><span class="case-metric-val">↑</span><span class="case-metric-lbl">Reporting Speed</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">Financial data required accurate, scalable processing for global reporting and analytics — with zero tolerance for data quality issues in investment operations.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li>Built reliable ingestion pipelines for financial datasets</li>
+              <li>Implemented transformation workflows for downstream analytics</li>
+              <li>Ensured data accuracy and consistency across all systems</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Applied checksum validation on all financial records to guarantee data integrity end-to-end</li>
+              <li>Implemented reconciliation checks comparing ingested data against source system totals</li>
+              <li>Used SCD processing to preserve full historical accuracy for investment reporting</li>
+              <li>Automated schema validation to prevent silent failures from upstream format changes</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>Enabled reliable, consistent financial reporting</li>
+              <li>Improved data availability for investment analysis</li>
+              <li>Supported global data operations at scale</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- 06 -->
+      <div class="case-card reveal" onclick="toggleCase(this)">
+        <div class="case-card-header">
+          <div class="case-card-meta">
+            <span class="case-badge">Gaming / Ad-Tech</span>
+            <span class="case-badge-role">Senior Data Engineer</span>
+            <span class="case-dq-tag">Data Quality Checks</span>
+          </div>
+          <div class="case-card-num">06</div>
+        </div>
+        <h3 class="case-card-title">Scalable Session Revenue Data Pipeline</h3>
+        <p class="case-card-summary">Built a scalable ETL pipeline for session-level revenue (ads + IAP), enabling accurate LTV/ROAS. Eliminated full table scans via smart incremental processing — reducing compute costs significantly.</p>
+        <div class="case-card-metrics">
+          <div class="case-metric"><span class="case-metric-val">↓</span><span class="case-metric-lbl">Compute Costs</span></div>
+          <div class="case-metric"><span class="case-metric-val">RT</span><span class="case-metric-lbl">Revenue Metrics</span></div>
+          <div class="case-metric"><span class="case-metric-val">LTV</span><span class="case-metric-lbl">ROAS Enabled</span></div>
+        </div>
+        <div class="case-expand-hint">
+          <span class="case-expand-text">View full case study</span>
+          <span class="case-expand-icon">↓</span>
+        </div>
+        <div class="case-detail">
+          <div class="case-detail-block">
+            <div class="case-detail-label">Problem</div>
+            <p class="case-detail-text">Revenue data was fragmented, late-arriving, and computationally expensive to process. Existing pipelines relied on full table scans — causing high costs, slow execution, and unreliable LTV and ROAS metrics across millions of gaming sessions.</p>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Solution</div>
+            <ul class="case-detail-list">
+              <li><strong>Smart Incremental Processing (Delta Lake CDF)</strong> — built a dynamic mechanism to detect late-arriving data and recompute only affected partitions, eliminating unnecessary reprocessing</li>
+              <li><strong>Advanced PySpark Optimisation</strong> — resolved heavy range-overlap bottlenecks (sessions crossing midnight) using partition pruning, generated columns, and Z-ordering</li>
+              <li><strong>Event-Driven Orchestration (Airflow Datasets)</strong> — replaced cron schedules with data-aware triggers, enabling instant downstream updates</li>
+              <li><strong>Scalable OOP Architecture</strong> — refactored pipeline using dependency injection and dataclasses, enabling unit testing without cluster dependency</li>
+              <li><strong>Idempotent Backfilling System</strong> — designed a safe backfill mode for historical data reprocessing without impacting production workloads</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label dq">Data Quality</div>
+            <ul class="case-detail-list dq">
+              <li>Idempotent write design guarantees no duplicates on retries or backfills</li>
+              <li>Partition-level validation checks confirm completeness before downstream DAGs trigger</li>
+              <li>Late-arriving data detection via Delta Lake CDF ensures historical partitions are recomputed accurately rather than silently stale</li>
+              <li>Unit-testable pipeline architecture (OOP + dataclasses) enables quality assertions to run without a live Spark cluster</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Impact</div>
+            <ul class="case-detail-list impact">
+              <li>Eliminated full table scans — significant reduction in compute costs</li>
+              <li>Reduced DAG execution time and improved overall pipeline efficiency</li>
+              <li>Delivered accurate, near real-time revenue metrics for analytics and Tableau reporting</li>
+              <li>Enabled reliable LTV and ROAS calculations for business decision-making</li>
+            </ul>
+          </div>
+          <div class="case-detail-block">
+            <div class="case-detail-label">Tech Stack</div>
+            <div style="display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:0.25rem;">
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">Airflow</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">Databricks</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">PySpark</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">Delta Lake</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">Python</span>
+              <span style="font-family:var(--mono);font-size:0.65rem;padding:0.25rem 0.6rem;border:1px solid var(--border);color:var(--muted);">Unity Catalog</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div><!-- /.case-grid -->
   </div>
 </section>
 
@@ -814,9 +1240,9 @@
     </div>
     <div class="reveal">
       <div class="contact-list">
-        <a href="/cdn-cgi/l/email-protection#076e61736e6c6f66756b6e6676726673363e3e3247606a666e6b2964686a" class="contact-row">
+        <a href="mailto:iftikharliaquat1995@gmail.com" class="contact-row">
           <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg></div>
-          <div><span class="contact-row-label">Email — fastest response</span><span class="contact-row-val"><span class="__cf_email__" data-cfemail="48212e3c212320293a242129393d293c7971717d082f25292124662b2725">[email&#160;protected]</span></span></div>
+          <div><span class="contact-row-label">Email — fastest response</span><span class="contact-row-val">liaquat.iftikhar@gmail.com</span></div>
         </a>
         <a href="tel:+4917677254339" class="contact-row">
           <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07A19.5 19.5 0 0 1 4.69 12a19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 3.6 1.18h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L7.91 8.78a16 16 0 0 0 6.29 6.29l.96-.96a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"/></svg></div>
@@ -826,17 +1252,17 @@
           <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg></div>
           <div><span class="contact-row-label">LinkedIn</span><span class="contact-row-val">linkedin.com/in/iftikharliaquat</span></div>
         </a>
-        <a href="https://github.com/iftikhar1995" class="contact-row" target="_blank">
+        <a href="https://github.com/liaquat-iftikhar" class="contact-row" target="_blank">
           <div class="contact-row-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"/></svg></div>
-          <div><span class="contact-row-label">GitHub</span><span class="contact-row-val">github.com/iftikhar1995</span></div>
+          <div><span class="contact-row-label">GitHub</span><span class="contact-row-val">github.com/liaquat-iftikhar</span></div>
         </a>
-        <!-- Replace href below with your actual Calendly link -->
-        <a href="https://calendly.com" class="contact-calendly" target="_blank">
+        <!-- Replace href with your actual Google Calendar appointment link -->
+        <!-- <a href="https://calendar.google.com/calendar/appointments" class="contact-calendly" target="_blank">
           <div class="contact-calendly-icon">
-            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/><circle cx="8" cy="15" r="1" fill="currentColor"/><circle cx="12" cy="15" r="1" fill="currentColor"/><circle cx="16" cy="15" r="1" fill="currentColor"/></svg>
           </div>
-          <div><span class="contact-calendly-label">Book a call — 30 min intro</span><span class="contact-calendly-val">Schedule via Calendly →</span></div>
-        </a>
+          <div><span class="contact-calendly-label">Book a call — 30 min intro</span><span class="contact-calendly-val">Schedule via Google Calendar →</span></div>
+        </a> -->
       </div>
     </div>
   </div>
@@ -868,6 +1294,24 @@
     mobileMenu.classList.remove('open');
     hamburger.classList.remove('open');
     document.body.style.overflow = '';
+  }
+
+  // Case study expand/collapse
+  function toggleCase(card) {
+    const isOpen = card.classList.contains('open');
+    document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
+    if (!isOpen) {
+      card.classList.add('open');
+      card.querySelector('.case-expand-text').textContent = 'Close case study';
+    }
+    card.querySelectorAll('.case-card:not(.open)').forEach(c => {
+      const hint = c.querySelector('.case-expand-text');
+      if (hint) hint.textContent = 'View full case study';
+    });
+    // reset all closed cards' hint text
+    document.querySelectorAll('.case-card:not(.open) .case-expand-text').forEach(el => {
+      el.textContent = 'View full case study';
+    });
   }
 
   // ── DATA FLOW ANIMATION ──
