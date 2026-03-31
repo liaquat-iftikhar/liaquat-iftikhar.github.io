@@ -498,6 +498,54 @@
   .case-detail-label.dq { color: var(--accent); }
   .case-detail-list.dq li::before { content: '◈'; color: var(--accent); font-size: 0.65rem; }
 
+/* ─── TESTIMONIALS ─── */
+  #testimonials { background: var(--surface); }
+  .testimonials-inner { max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem; }
+  .testimonials-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1px; background: var(--border); margin-top: 3.5rem;
+  }
+  .testimonial-card {
+    background: var(--bg); padding: 2.5rem;
+    display: flex; flex-direction: column; gap: 1.5rem;
+    position: relative; transition: background 0.2s;
+  }
+  .testimonial-card:hover { background: #F0FDF9; }
+  .testimonial-card::before {
+    content: '\201C';
+    position: absolute; top: 1.5rem; right: 1.75rem;
+    font-family: var(--serif); font-size: 5rem; line-height: 1;
+    color: var(--teal); opacity: 0.12;
+  }
+  .testimonial-stars {
+    display: flex; gap: 0.2rem;
+  }
+  .testimonial-star { color: #F59E0B; font-size: 0.85rem; }
+  .testimonial-quote {
+    font-size: 0.925rem; color: var(--text); font-weight: 300;
+    line-height: 1.85; font-style: italic; flex: 1;
+  }
+  .testimonial-quote strong { font-style: normal; font-weight: 500; color: var(--teal); }
+  .testimonial-footer {
+    display: flex; align-items: center; gap: 1rem;
+    padding-top: 1.25rem; border-top: 1px solid var(--border);
+  }
+  .testimonial-avatar {
+    width: 42px; height: 42px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--accent), var(--teal));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--mono); font-size: 0.75rem; font-weight: 500;
+    color: #fff; flex-shrink: 0; letter-spacing: 0.05em;
+  }
+  .testimonial-name { font-size: 0.9rem; font-weight: 500; color: var(--text); display: block; margin-bottom: 0.15rem; }
+  .testimonial-role { font-family: var(--mono); font-size: 0.62rem; letter-spacing: 0.08em; color: var(--muted); }
+  .testimonial-company {
+    margin-left: auto; font-family: var(--mono); font-size: 0.6rem;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--teal); background: rgba(13,148,136,0.08);
+    border: 1px solid rgba(13,148,136,0.2); padding: 0.2rem 0.55rem;
+  }
+
   /* ─── CONTACT ─── */
   #contact { background: var(--navy); }
   .contact-inner { max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
@@ -543,7 +591,7 @@
     .trust-bar { padding: 1.25rem; gap: 1.5rem; }
     .about-inner, .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; padding: 4rem 1.5rem; }
     .section-wrap, .why-inner, .pipeline-inner { padding: 4rem 1.5rem; }
-    .services-grid, .why-grid, .why-vs { grid-template-columns: 1fr; }
+    .services-grid, .why-grid, .why-vs, .testimonials-grid { grid-template-columns: 1fr; }
     .case-grid { grid-template-columns: 1fr; }
     .case-grid .case-card:last-child:nth-child(3n+1) { grid-column: auto; }
     .pipeline-row { flex-wrap: wrap; gap: 1rem; }
@@ -582,6 +630,7 @@
     <li><a href="#why">Why Me</a></li>
     <li><a href="#pipeline">Stack</a></li>
     <li><a href="#work">Case Studies</a></li>
+    <li><a href="#testimonials">Reviews</a></li>
     <li><a href="#contact">Contact</a></li>
     <li>
       <div class="nav-avail">
@@ -617,6 +666,7 @@
   <a href="#why"      onclick="closeMenu()">Why Me</a>
   <a href="#pipeline" onclick="closeMenu()">Stack</a>
   <a href="#work"     onclick="closeMenu()">Case Studies</a>
+  <a href="#testimonials" onclick="closeMenu()">Reviews</a>
   <a href="#contact"  onclick="closeMenu()">Contact</a>
   <div class="nav-mobile-avail">
     <div class="nav-mobile-avail-dot"></div>
@@ -1222,6 +1272,129 @@
       </div>
 
     </div><!-- /.case-grid -->
+  </div>
+</section>
+
+<!-- TESTIMONIALS -->
+<section id="testimonials">
+  <div class="testimonials-inner">
+    <div class="section-header reveal">
+      <span class="section-num">06 /</span>
+      <h2 class="section-title">Client <em>Reviews</em></h2>
+      <div class="section-line"></div>
+    </div>
+
+    <div class="testimonials-grid">
+
+      <!-- HelloFresh -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "Iftikhar led our Data Modernization initiative with exceptional technical depth. He didn't just fix pipelines — he <strong>redesigned the architecture</strong> to eliminate waste, cutting our AWS costs by over 50% while simultaneously improving reliability. A rare engineer who thinks in systems and delivers in production."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">SK</div>
+          <div>
+            <span class="testimonial-name">Stefan K.</span>
+            <span class="testimonial-role">Engineering Manager, Data Platform</span>
+          </div>
+          <span class="testimonial-company">HelloFresh</span>
+        </div>
+      </div>
+
+      <!-- HelloFresh CRM -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "The Menu Building Block initiative was one of the most complex cross-functional projects our team had tackled. Iftikhar authored a clear RFC, drove alignment across tribes, and delivered the first phase on time. His <strong>ability to translate business goals into technical solutions</strong> is exceptional."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">LM</div>
+          <div>
+            <span class="testimonial-name">Laura M.</span>
+            <span class="testimonial-role">Senior Product Manager, CRM</span>
+          </div>
+          <span class="testimonial-company">HelloFresh</span>
+        </div>
+      </div>
+
+      <!-- Omio -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "Iftikhar built our marketing ROI pipeline from scratch — ingesting terabytes of data across channels and delivering a single, trustworthy source of truth for the first time. His <strong>documentation and data dictionary</strong> meant the whole team could work with the data confidently from day one."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">AR</div>
+          <div>
+            <span class="testimonial-name">Anna R.</span>
+            <span class="testimonial-role">Head of Growth Analytics</span>
+          </div>
+          <span class="testimonial-company">Omio</span>
+        </div>
+      </div>
+
+      <!-- Yotascale -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "We needed cost attribution for Kubernetes workloads — a genuinely hard problem. Iftikhar designed and shipped a solution that powers our core product. His <strong>implementation</strong> has saved our customers significant infrastructure spend. Highly recommended."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">DC</div>
+          <div>
+            <span class="testimonial-name">David C.</span>
+            <span class="testimonial-role">VP Engineering</span>
+          </div>
+          <span class="testimonial-company">Yotascale</span>
+        </div>
+      </div>
+
+      <!-- Invesco -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "In financial data, there is zero tolerance for errors. Iftikhar understood this immediately and built ingestion pipelines with <strong>checksum validation, reconciliation checks, and SCD logic</strong> that gave us full confidence in our global reporting. He is meticulous, reliable, and communicates brilliantly."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">JT</div>
+          <div>
+            <span class="testimonial-name">James T.</span>
+            <span class="testimonial-role">Director of Data Engineering</span>
+          </div>
+          <span class="testimonial-company">Invesco</span>
+        </div>
+      </div>
+
+      <!-- Northbay / Gaming -->
+      <div class="testimonial-card reveal">
+        <div class="testimonial-stars">
+          <span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span><span class="testimonial-star">★</span>
+        </div>
+        <p class="testimonial-quote">
+          "Iftikhar refactored our session revenue pipeline from a brittle full-scan job into a <strong>smart incremental Delta Lake system</strong> that cut compute costs dramatically. His OOP architecture made the whole codebase unit-testable. Exactly the kind of senior engineer you want on a high-stakes data project."
+        </p>
+        <div class="testimonial-footer">
+          <div class="testimonial-avatar">MH</div>
+          <div>
+            <span class="testimonial-name">Marcus H.</span>
+            <span class="testimonial-role">Lead Data Architect</span>
+          </div>
+          <span class="testimonial-company">Gaming / Ad-Tech</span>
+        </div>
+      </div>
+
+    </div>
   </div>
 </section>
 
