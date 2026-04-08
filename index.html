@@ -350,8 +350,9 @@
   .case-card.open .case-expand-icon { transform: rotate(180deg); }
   .case-card.open .case-expand-text { content: 'Close'; }
 
+  /* Expandable detail panel (Mobile view) */
   .case-detail { max-height: 0; overflow: hidden; transition: max-height 0.45s ease, padding 0.3s ease; padding-top: 0; }
-  .case-card.open .case-detail { max-height: 800px; padding-top: 2rem; border-top: 1px solid var(--border); margin-top: 1rem; }
+  .case-card.open .case-detail { max-height: 1200px; padding-top: 2rem; border-top: 1px solid var(--border); margin-top: 1rem; }
   .case-detail-block { margin-bottom: 1.5rem; }
   .case-detail-block:last-child { margin-bottom: 0; }
   .case-detail-label { font-family: var(--mono); font-size: 0.65rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--heading); margin-bottom: 0.5rem; font-weight: 500; }
@@ -363,6 +364,41 @@
   .case-dq-tag { display: inline-flex; align-items: center; gap: 0.4rem; font-family: var(--mono); font-size: 0.6rem; color: var(--accent); background: rgba(37,99,235,0.06); border: 1px solid rgba(37,99,235,0.15); padding: 0.2rem 0.6rem; border-radius: 4px; margin-top: 0.5rem; width: fit-content; }
   .case-detail-label.dq { color: var(--accent); }
   .case-detail-list.dq li::before { content: '◈'; color: var(--accent); font-size: 0.7rem; }
+
+  /* ─── CASE STUDY MODAL (Desktop) ─── */
+  .case-modal {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    align-items: center; justify-content: center; padding: 2rem;
+    opacity: 0; transition: opacity 0.3s ease;
+  }
+  .case-modal.show { display: flex; opacity: 1; }
+  
+  .case-modal-backdrop { 
+    position: absolute; inset: 0; 
+    background: rgba(15, 23, 42, 0.6); backdrop-filter: blur(8px); 
+  }
+  
+  .case-modal-content {
+    position: relative; z-index: 1; background: var(--surface);
+    width: 100%; max-width: 850px; max-height: 90vh; overflow-y: auto;
+    border-radius: 12px; padding: 3.5rem;
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.25);
+    transform: translateY(20px); transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .case-modal.show .case-modal-content { transform: translateY(0); }
+  
+  .case-modal-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: var(--bg2); border: none; font-size: 1.25rem;
+    width: 40px; height: 40px; border-radius: 50%;
+    cursor: pointer; color: var(--text); transition: all 0.2s;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .case-modal-close:hover { background: var(--border); color: var(--heading); transform: rotate(90deg); }
+  
+  .case-modal-content::-webkit-scrollbar { width: 8px; }
+  .case-modal-content::-webkit-scrollbar-track { background: transparent; }
+  .case-modal-content::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
 
   /* ─── GITHUB PROJECTS ─── */
   #github::before { content: ''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 80vw; height: 80vw; background: radial-gradient(circle, rgba(13,148,136,0.06) 0%, transparent 60%); pointer-events: none; z-index: 0; }
@@ -399,6 +435,7 @@
 
   .github-loading { grid-column: 1 / -1; text-align: center; font-family: var(--mono); font-size: 0.8rem; color: rgba(255,255,255,0.4); padding: 4rem; display: flex; align-items: center; justify-content: center; gap: 0.75rem; }
   .github-spinner { width: 18px; height: 18px; border: 2px solid rgba(255,255,255,0.1); border-top-color: #5EEAD4; border-radius: 50%; animation: spin 0.8s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
   .github-error { grid-column: 1 / -1; text-align: center; font-family: var(--mono); font-size: 0.8rem; color: rgba(255,255,255,0.4); padding: 3rem; }
 
   /* ─── BLOG SECTION ─── */
@@ -408,7 +445,7 @@
   
   .blog-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem; }
   .blog-card { 
-    background: var(--bg); border: 1px solid var(--border); border-radius: var(--radius); 
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius); 
     overflow: hidden; display: flex; flex-direction: column; text-decoration: none; 
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); cursor: pointer;
   }
@@ -430,7 +467,7 @@
   .contact-inner { max-width: 1180px; margin: 0 auto; padding: 6.5rem 3.5rem; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: start; }
   .contact-heading { font-size: clamp(2.5rem, 4vw, 3.5rem); font-weight: 600; letter-spacing: -0.03em; color: #F8FAFC; line-height: 1.1; margin-bottom: 1.5rem; }
   .contact-heading em { font-style: normal; color: #5EEAD4; }
-  .contact-sub { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.85; margin-bottom: 2rem; } 
+  .contact-sub { font-size: 1rem; color: rgba(255,255,255,0.5); font-weight: 300; line-height: 1.85; margin-bottom: 2rem; }
   .contact-problem { font-family: var(--mono); font-size: 0.85rem; color: #5EEAD4; line-height: 1.7; margin-bottom: 2.5rem; padding: 1.5rem; border-left: 3px solid var(--teal); background: rgba(13,148,136,0.06); border-radius: 0 var(--radius) var(--radius) 0; }
   .contact-ctas { display: flex; flex-direction: column; gap: 0.75rem; }
   .contact-list { display: flex; flex-direction: column; gap: 0.75rem; }
@@ -504,9 +541,9 @@
       <ul class="dropdown-menu" id="portfolio-menu">
         <li><a href="#work">Case Studies</a></li>
         <li><a href="#github">Open Source & Projects</a></li>
-        <li><a href="#blog">Latest Articles</a></li>
       </ul>
     </li>
+    <li><a href="#blog">Blog</a></li>
     <li><a href="#contact">Contact</a></li>
     <li>
       <div class="nav-avail">
@@ -544,8 +581,9 @@
   <div id="mobile-portfolio-menu" style="display: none; padding-left: 1.5rem; margin-top: -0.5rem; margin-bottom: 0.5rem;">
     <a href="#work" onclick="closeMenu()" style="font-size: 0.9em; opacity: 0.8; display: block; margin-bottom: 0.5rem;">Case Studies</a>
     <a href="#github" onclick="closeMenu()" style="font-size: 0.9em; opacity: 0.8; display: block;">Open Source & Projects</a>
-    <a href="#blog" onclick="closeMenu()" style="font-size: 0.9em; opacity: 0.8; display: block;">Latest Articles</a>
   </div>
+  
+  <a href="#blog" onclick="closeMenu()">Blog</a>
   <a href="#contact" onclick="closeMenu()">Contact</a>
   <div class="nav-mobile-avail">
     <div class="nav-mobile-avail-dot"></div>
@@ -1092,6 +1130,16 @@
   <a href="#hero-canvas" class="footer-top">Back to top ↑</a>
 </footer>
 
+<div id="case-modal" class="case-modal">
+  <div class="case-modal-backdrop" onclick="closeCaseModal()"></div>
+  <div class="case-modal-content">
+    <button class="case-modal-close" aria-label="Close" onclick="closeCaseModal()">
+      <i class="fa-solid fa-xmark"></i>
+    </button>
+    <div id="case-modal-body"></div>
+  </div>
+</div>
+
 <script>
   // Desktop Nav Dropdown
   document.addEventListener('DOMContentLoaded', function() {
@@ -1147,22 +1195,70 @@
     document.body.style.overflow = '';
   }
 
-  // Case study expand/collapse
+  // Case study expand/collapse & Desktop Modal
   function toggleCase(card) {
-    const isOpen = card.classList.contains('open');
-    document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
-    if (!isOpen) {
-      card.classList.add('open');
-      card.querySelector('.case-expand-text').textContent = 'Close case study';
+    const isDesktop = window.innerWidth >= 960; 
+
+    if (isDesktop) {
+      // ─── DESKTOP: Open Modal Canvas ───
+      const modal = document.getElementById('case-modal');
+      const modalBody = document.getElementById('case-modal-body');
+      
+      const meta = card.querySelector('.case-card-meta').outerHTML;
+      const title = card.querySelector('.case-card-title').innerHTML;
+      const summary = card.querySelector('.case-card-summary').innerHTML;
+      const metrics = card.querySelector('.case-card-metrics').outerHTML;
+      const detail = card.querySelector('.case-detail').innerHTML;
+
+      modalBody.innerHTML = `
+        <div style="margin-bottom:1.5rem;">${meta}</div>
+        <h2 style="font-size:2.2rem; font-weight:700; color:var(--heading); line-height:1.2; letter-spacing:-0.03em; margin-bottom:1rem;">
+          ${title}
+        </h2>
+        <p style="font-size:1.1rem; color:var(--text); font-weight:300; line-height:1.7; margin-bottom:2.5rem;">
+          ${summary}
+        </p>
+        ${metrics}
+        <div style="margin-top:3rem; padding-top:2.5rem; border-top:1px solid var(--border);">
+          ${detail}
+        </div>
+      `;
+
+      modal.style.display = 'flex';
+      void modal.offsetWidth; 
+      modal.classList.add('show');
+      document.body.style.overflow = 'hidden';
+
+    } else {
+      // ─── MOBILE: Inline Accordion ───
+      const isOpen = card.classList.contains('open');
+      document.querySelectorAll('.case-card.open').forEach(c => c.classList.remove('open'));
+      
+      if (!isOpen) {
+        card.classList.add('open');
+        card.querySelector('.case-expand-text').textContent = 'Close case study';
+      }
+      document.querySelectorAll('.case-card:not(.open)').forEach(c => {
+        const hint = c.querySelector('.case-expand-text');
+        if (hint) hint.textContent = 'View full case study';
+      });
     }
-    card.querySelectorAll('.case-card:not(.open)').forEach(c => {
-      const hint = c.querySelector('.case-expand-text');
-      if (hint) hint.textContent = 'View full case study';
-    });
-    document.querySelectorAll('.case-card:not(.open) .case-expand-text').forEach(el => {
-      el.textContent = 'View full case study';
-    });
   }
+
+  function closeCaseModal() {
+    const modal = document.getElementById('case-modal');
+    modal.classList.remove('show');
+    setTimeout(() => {
+      modal.style.display = 'none';
+      document.body.style.overflow = '';
+    }, 300);
+  }
+  
+  document.addEventListener('keydown', function(event) {
+    if (event.key === "Escape") {
+      closeCaseModal();
+    }
+  });
 
   // ── DATA FLOW ANIMATION ──
   (function() {
